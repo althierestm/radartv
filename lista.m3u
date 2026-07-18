@@ -1,1 +1,3 @@
 #EXTM3U
+#EXTINF:-1 tvg-id="RadarTV" tvg-name="Radar TV" tvg-logo="https://raw.githubusercontent.com/althierestm/radartv/main/Logo%20RadarTV%203000x3000.jpg" group-title="Radar TV", Radar TV (Fora do Ar)
+https://raw.githubusercontent.com/althierestm/radartv/main/offline.mp4
