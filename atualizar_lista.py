@@ -14,9 +14,6 @@ YOUTUBE_LIVE_URL = f"https://www.youtube.com/embed/live_stream?channel={CHANNEL_
 def create_m3u():
     m3u_content = '#EXTM3U\n'
     
-    # IMPORTANTE: Como você quer priorizar o sinal do YouTube para o seu amigo e para o site, 
-    # vamos deixar o link fixo apontando para a sua transmissão ao vivo do canal.
-    # Se o player ou o aplicativo tiverem suporte a Web Players, ele abrirá o sinal do OBS na hora.
     print("Gerando canal com link dinâmico de Live do YouTube...")
     m3u_content += f'#EXTINF:-1 tvg-id="RadarTV" tvg-name="{PLAYLIST_NAME}" tvg-logo="{LOGO_URL}" group-title="Radar TV", {PLAYLIST_NAME} [AO VIVO]\n'
     m3u_content += f'{YOUTUBE_LIVE_URL}\n'
