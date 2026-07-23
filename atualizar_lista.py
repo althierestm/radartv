@@ -1,6 +1,5 @@
 import os
-import re
-import urllib.request
+import subprocess
 
 # Configurações da sua Emissora (Radar TV)
 PLAYLIST_NAME = "Radar TV"
@@ -15,29 +14,19 @@ IBLUPS_PAGE_URL = "https://iblups.com/e96f8910-bd68-4c58-aae6-785a61a475db"
 
 def obter_stream_iblups(url):
     """
-    Acessa a página da Iblups e extrai o link .m3u8 do vídeo ao vivo.
+    Usa o yt-dlp para extrair o link .m3u8 direto da página do Iblups.
     """
     try:
-        req = urllib.request.Request(
-            url, 
-            headers={
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-            }
-        )
-        with urllib.request.urlopen(req, timeout=10) as response:
-            html = response.read().decode('utf-8', errors='ignore')
-            
-            # Procura por qualquer URL terminada em .m3u8 no código da página
-            matches = re.findall(r'https?://[^\s\'"\\]+\.m3u8[^\s\'"\\]*', html)
-            if matches:
-                # Limpa eventuais caracteres de escape
-                stream_m3u8 = matches[0].replace('\\', '')
-                print(f"Sinal .m3u8 encontrado na Iblups: {stream_m3u8}")
-                return stream_m3u8
-            
-            return None
+        cmd = ["yt-dlp", "-g", "--no-warnings", url]
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+        stream_url = result.stdout.strip()
+        
+        if result.returncode == 0 and "m3u8" in stream_url:
+            print(f"Sinal .m3u8 capturado da Iblups: {stream_url}")
+            return stream_url
+        return None
     except Exception as e:
-        print(f"Canal Iblups offline ou inacessível no momento: {e}")
+        print(f"Erro ao verificar Iblups: {e}")
         return None
 
 
@@ -53,7 +42,7 @@ def create_m3u():
         m3u_content += f'#EXTINF:-1 tvg-id="RadarTV" tvg-name="{PLAYLIST_NAME}" tvg-logo="{LOGO_URL}" group-title="Radar TV", {PLAYLIST_NAME} [AO VIVO]\n'
         m3u_content += f'{stream_live}\n'
     else:
-        # 📺 Se estiver offline ou sem sinal: Transmite a FCV TV como Canal Principal
+        # 📺 Se estiver offline: Transmite a FCV TV como Canal Principal
         print("📺 Transmitindo Canal Principal (FCV TV)...")
         m3u_content += f'#EXTINF:-1 tvg-id="RadarTV" tvg-name="{PLAYLIST_NAME}" tvg-logo="{LOGO_URL}" group-title="Radar TV", {PLAYLIST_NAME}\n'
         m3u_content += f'{CANAL_PRINCIPAL_FCV}\n'
