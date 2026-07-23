@@ -1,5 +1,3 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="RadarTV" tvg-name="Radar TV" tvg-logo="https://raw.githubusercontent.com/althierestm/radartv/main/Logo%20RadarTV%203000x3000.jpg" group-title="Radar TV", Radar TV [AO VIVO]
-#EXTVLCOPT:http-referrer=https://iblups.com/
-#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64)
-https://sc2.escuela4.com/live/8a49f12871dc182f414547d57819d46bb71a3890.m3u8|User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64)&Referer=https://iblups.com/
+#EXTINF:-1 tvg-id="RadarTV" tvg-name="Radar TV" tvg-logo="https://raw.githubusercontent.com/althierestm/radartv/main/Logo%20RadarTV%203000x3000.jpg" group-title="Radar TV", Radar TV
+https://video01.logicahost.com.br/fcvtv/fcvtv/playlist.m3u8
